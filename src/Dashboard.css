@@ -1,93 +1,121 @@
-/* Layout */
-.dashboard-layout {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #ffffff;
+/* ==================== LAYOUT GÉNÉRAL ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Sidebar */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ==================== SIDEBAR ==================== */
 .sidebar {
   width: 280px;
-  background-color: #2c3e50;
+  background: linear-gradient(180deg, #4a5057 0%, #33363a 100%);
   color: white;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
 }
 
 .sidebar-header {
+  padding: 25px 20px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-logo-icon {
-  font-size: 24px;
-  color: white;
+  background-color: white;
+  color: #333;
+  padding: 8px 10px;
+  margin-right: 12px;
+  border-radius: 3px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar-logo-text {
-  font-size: 18px;
   font-weight: bold;
+  letter-spacing: 1.5px;
+  font-size: 1.1rem;
+}
+
+.sidebar-section {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.sidebar-section-title {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  padding: 0 20px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .sidebar-nav {
-  flex: 1;
-}
-
-.nav-section-title {
-  color: #95a5a6;
-  font-size: 12px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-
-.nav-item {
-  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sidebar-item {
   background: transparent;
+  color: white;
   border: none;
-  color: #bdc3c7;
+  padding: 15px 20px;
+  text-align: left;
   cursor: pointer;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  font-size: 14px;
-  transition: all 0.3s;
-}
-
-.nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.nav-item.active {
-  background-color: #34495e;
-  color: white;
-}
-
-.nav-icon {
-  font-size: 18px;
-}
-
-/* Sidebar User */
-.sidebar-user {
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-item.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-left-color: #f39c12;
+  font-weight: 600;
+}
+
+.sidebar-icon {
+  font-size: 1.2rem;
+}
+
+.sidebar-user {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .user-info {
@@ -95,15 +123,14 @@
 }
 
 .user-name {
-  font-size: 14px;
+  font-size: 0.95rem;
   font-weight: 600;
-  margin: 0 0 4px 0;
+  margin-bottom: 4px;
 }
 
 .user-status {
-  font-size: 12px;
-  color: #95a5a6;
-  margin: 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -112,150 +139,172 @@
 .status-dot {
   width: 8px;
   height: 8px;
-  background-color: #2ecc71;
+  background: #2ecc71;
   border-radius: 50%;
+  display: inline-block;
 }
 
-/* Main Content */
+/* ==================== MAIN CONTENT ==================== */
 .main-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  background-color: #ffffff;
+  margin-left: 280px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
 }
 
-/* Header */
-.top-header {
-  background-color: white;
+/* ==================== TOP BAR ==================== */
+.top-bar {
+  background: white;
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ecf0f1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 .page-title {
-  font-size: 24px;
+  font-size: 1.5rem;
+  color: #333;
   font-weight: 600;
-  color: #2c3e50;
-  margin: 0;
 }
 
-.header-actions {
+.top-bar-actions {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.search-box input {
-  padding: 8px 16px;
-  border: 1px solid #ddd;
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 8px 15px;
   border-radius: 6px;
-  width: 200px;
-  font-size: 14px;
+  gap: 10px;
+  min-width: 250px;
 }
 
-.notification-btn {
-  position: relative;
-  background: transparent;
+.search-box svg {
+  color: #999;
+  flex-shrink: 0;
+}
+
+.search-box input {
   border: none;
-  font-size: 18px;
-  cursor: pointer;
-  color: #2c3e50;
-  transition: color 0.3s;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-size: 0.9rem;
+  color: #333;
 }
 
-.notification-btn:hover {
-  color: #E74C3C;
+.search-box input::placeholder {
+  color: #999;
+}
+
+.notification-icon {
+  position: relative;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 .notification-badge {
   position: absolute;
   top: -5px;
   right: -5px;
-  background-color: #f39c12;
+  background: #f39c12;
   color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 10px;
-}
-
-.profile-avatar {
-  width: 35px;
-  height: 35px;
+  font-size: 0.7rem;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
 
-.logout-btn {
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #f5f5f5;
+}
+
+.logout-icon {
   background: transparent;
   border: none;
-  font-size: 18px;
   cursor: pointer;
-  color: #2c3e50;
+  color: #666;
   transition: color 0.3s;
-}
-
-.logout-btn:hover {
-  color: #E74C3C;
-}
-
-/* Dashboard Content */
-.dashboard-content {
-  padding: 0;
-  flex: 1;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
 }
 
-/* Section titre - fond blanc */
+.logout-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.logout-icon:hover {
+  color: #e74c3c;
+}
+
+/* ==================== DASHBOARD CONTENT ==================== */
+.dashboard-content {
+  padding: 40px;
+}
+
 .welcome-section {
-  background-color: #ffffff;
-  padding: 30px 40px 20px 40px;
+  margin-bottom: 40px;
 }
 
-.welcome-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: #2c3e50;
+.welcome-section h2 {
+  font-size: 1.8rem;
+  color: #333;
   margin-bottom: 8px;
-  margin-top: 0;
 }
 
 .welcome-subtitle {
-  color: #7f8c8d;
-  margin-bottom: 0;
-  margin-top: 0;
+  color: #999;
+  font-size: 0.95rem;
 }
 
-/* Section stats - fond gris */
-.stats-section {
-  background-color: #f5f5f5;
-  padding: 30px 40px;
-  flex: 1;
-}
-
-/* Stats Grid */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 25px;
 }
 
 .stat-card {
   background: white;
   padding: 25px;
-  border-radius: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   gap: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
 }
 
 .stat-icon {
@@ -265,8 +314,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.stat-icon.purple {
+  background: #9b59b6;
   color: white;
-  font-size: 24px;
+}
+
+.stat-icon.teal {
+  background: #1abc9c;
+  color: white;
+}
+
+.stat-icon.yellow {
+  background: #f39c12;
+  color: white;
+}
+
+.stat-icon.red {
+  background: #e74c3c;
+  color: white;
+}
+
+.stat-icon.magenta {
+  background: #8e44ad;
+  color: white;
+}
+
+.stat-icon.blue {
+  background: #3498db;
+  color: white;
 }
 
 .stat-info {
@@ -274,21 +353,185 @@
 }
 
 .stat-number {
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: bold;
-  color: #2c3e50;
-  margin: 0 0 8px 0;
+  color: #333;
+  margin-bottom: 5px;
 }
 
 .stat-label {
-  font-size: 14px;
-  font-weight: normal;
-  color: #7f8c8d;
-  margin-left: 8px;
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 5px;
 }
 
-.stat-subtitle {
-  color: #95a5a6;
-  font-size: 13px;
+.stat-description {
+  font-size: 0.85rem;
+  color: #999;
   margin: 0;
+}
+
+/* ==================== HOTELS LIST CONTENT ==================== */
+.hotels-list-content {
+  padding: 40px;
+}
+
+.hotels-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.hotels-title {
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hotels-count {
+  background: #e0e0e0;
+  color: #666;
+  font-size: 1rem;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+}
+
+.btn-create-hotel {
+  background: white;
+  color: #333;
+  border: 2px solid #ddd;
+  padding: 12px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-create-hotel:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+}
+
+/* ==================== HOTELS GRID ==================== */
+.hotels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.hotel-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.hotel-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hotel-image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #e0e0e0;
+}
+
+.hotel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.hotel-card:hover .hotel-image {
+  transform: scale(1.1);
+}
+
+.hotel-details {
+  padding: 20px;
+}
+
+.hotel-address {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.hotel-name {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.hotel-price {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 250px;
+  }
+
+  .main-content {
+    margin-left: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .top-bar {
+    padding: 15px 20px;
+  }
+
+  .search-box {
+    min-width: 150px;
+  }
+
+  .dashboard-content,
+  .hotels-list-content {
+    padding: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hotels-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .hotels-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
 }
