@@ -40,40 +40,38 @@ function App() {
   // Page Mot de passe oublié
   if (currentPage === 'forgot-password') {
     return (
-      <div className="login-container">
-        <div className="logo-section">
-          <span className="logo-icon"><FaBookmark /></span> 
-          <span className="logo-text">RED PRODUCT</span>
-        </div>
+      <div className="auth-container">
+        <div className="auth-card">
+          <div className="auth-logo">
+            <FaBookmark className="auth-logo-icon" />
+            <span className="auth-logo-text">RED PRODUCT</span>
+          </div>
 
-        <div className="login-card">
-          <h2 className="forgot-password-title">Mot de passe oublié?</h2>
-          <p className="forgot-password-description">
-            Entrez votre adresse e-mail ci-dessous et nous vous envoyons des instructions sur la façon de modifier votre mot de passe.
-          </p>
-          
-          <form className="login-form" onSubmit={(e) => { 
-            e.preventDefault(); 
-            // Afficher un message de confirmation
-            alert('Instructions envoyées ! Vérifiez votre boîte e-mail.');
-            // Rediriger vers le Dashboard
-            setCurrentPage('dashboard');
-          }}>
-            <input 
-              type="email" 
-              placeholder="Votre e-mail" 
-              className="input-field" 
-              required 
-            />
+          <div className="auth-form-container">
+            <h2 className="auth-title">Mot de passe oublié?</h2>
+            <p className="auth-description">
+              Entrez votre adresse e-mail ci-dessous et nous vous envoyons des instructions sur la façon de modifier votre mot de passe.
+            </p>
             
-            <button type="submit" className="login-button">
-              Envoyer
-            </button>
-          </form>
+            <form className="auth-form" onSubmit={(e) => { 
+              e.preventDefault(); 
+              alert('Instructions envoyées ! Vérifiez votre boîte e-mail.');
+              setCurrentPage('dashboard');
+            }}>
+              <input 
+                type="email" 
+                placeholder="Votre e-mail" 
+                className="auth-input" 
+                required 
+              />
+              
+              <button type="submit" className="auth-button">
+                Envoyer
+              </button>
+            </form>
 
-          <div className="footer-links">
-            <p className="back-to-login">
-              Revenir à <span className="login-link" onClick={handleBackToLogin}>la connexion</span>
+            <p className="auth-footer">
+              Revenir à la <span className="auth-link" onClick={handleBackToLogin}>connexion</span>
             </p>
           </div>
         </div>
@@ -84,48 +82,52 @@ function App() {
   // Page d'inscription
   if (currentPage === 'signup') {
     return (
-      <div className="login-container">
-        <div className="logo-section">
-          <span className="logo-icon"><FaBookmark /></span> 
-          <span className="logo-text">RED PRODUCT</span>
-        </div>
+      <div className="auth-container">
+        <div className="auth-card">
+          <div className="auth-logo">
+            <FaBookmark className="auth-logo-icon" />
+            <span className="auth-logo-text">RED PRODUCT</span>
+          </div>
 
-        <div className="login-card">
-          <p className="login-subtitle">Inscrivez-vous en tant que Admin</p>
-          
-          <form className="login-form" onSubmit={(e) => { e.preventDefault(); alert('Inscription réussie !'); setCurrentPage('login'); }}>
-            <input 
-              type="text" 
-              placeholder="Nom" 
-              className="input-field" 
-              required 
-            />
-            <input 
-              type="email" 
-              placeholder="E-mail" 
-              className="input-field" 
-              required 
-            />
-            <input 
-              type="password" 
-              placeholder="Mot de passe" 
-              className="input-field" 
-              required 
-            />
+          <div className="auth-form-container">
+            <h2 className="auth-title">Inscrivez-vous en tant que Admin</h2>
             
-            <div className="checkbox-container">
-              <input type="checkbox" id="terms" required />
-              <label htmlFor="terms">Accepter les termes et la politique</label>
-            </div>
+            <form className="auth-form" onSubmit={(e) => { 
+              e.preventDefault(); 
+              alert('Inscription réussie !'); 
+              setCurrentPage('login'); 
+            }}>
+              <input 
+                type="text" 
+                placeholder="Nom" 
+                className="auth-input" 
+                required 
+              />
+              <input 
+                type="email" 
+                placeholder="E-mail" 
+                className="auth-input" 
+                required 
+              />
+              <input 
+                type="password" 
+                placeholder="Mot de passe" 
+                className="auth-input" 
+                required 
+              />
+              
+              <div className="auth-checkbox">
+                <input type="checkbox" id="terms" required />
+                <label htmlFor="terms">Accepter les termes et la politique</label>
+              </div>
 
-            <button type="submit" className="login-button">
-              S'inscrire
-            </button>
-          </form>
+              <button type="submit" className="auth-button">
+                S'inscrire
+              </button>
+            </form>
 
-          <div className="footer-links">
-            <p className="signup-text">
-              Vous avez déjà un compte? <span className="signup-link" onClick={handleBackToLogin}>Se connecter</span>
+            <p className="auth-footer">
+              Vous avez déjà un compte? <span className="auth-link" onClick={handleBackToLogin}>Se connecter</span>
             </p>
           </div>
         </div>
@@ -133,49 +135,50 @@ function App() {
     );
   }
 
-  // Page de connexion
+  // Page de connexion - NOUVEAU CODE
   return (
-    <div className="login-container">
-      <div className="logo-section">
-        <span className="logo-icon"><FaBookmark /></span> 
-        <span className="logo-text">RED PRODUCT</span>
-      </div>
-
-      <div className="login-card">
-        <p className="login-subtitle">Connectez-vous en tant que Admin</p>
-        
-        <form className="login-form" onSubmit={handleLogin}>
-          <input 
-            type="email" 
-            placeholder="E-mail" 
-            className="input-field" 
-            required 
-          />
-          <input 
-            type="password" 
-            placeholder="Mot de passe" 
-            className="input-field" 
-            required 
-          />
-          
-          <div className="checkbox-container">
-            <input type="checkbox" id="remember" />
-            <label htmlFor="remember">Gardez-moi connecté</label>
-          </div>
-
-          <button type="submit" className="login-button">
-            Se connecter
-          </button>
-        </form>
-
-        <div className="footer-links">
-          <a href="#" className="forgot-password" onClick={(e) => { e.preventDefault(); handleForgotPassword(); }}>
-            Mot de passe oublié?
-          </a>
-          <p className="signup-text">
-            Vous n'avez pas de compte? <span className="signup-link" onClick={handleGoToSignup}>S'inscrire</span>
-          </p>
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-logo">
+          <FaBookmark className="auth-logo-icon" />
+          <span className="auth-logo-text">RED PRODUCT</span>
         </div>
+
+        <div className="auth-form-container">
+          <h2 className="auth-title">Connectez-vous en tant que Admin</h2>
+          
+          <form className="auth-form" onSubmit={handleLogin}>
+            <input 
+              type="email" 
+              placeholder="E-mail" 
+              className="auth-input" 
+              required 
+            />
+            <input 
+              type="password" 
+              placeholder="Mot de passe" 
+              className="auth-input" 
+              required 
+            />
+            
+            <div className="auth-checkbox">
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Gardez-moi connecté</label>
+            </div>
+
+            <button type="submit" className="auth-button">
+              Se connecter
+            </button>
+          </form>
+        </div>
+
+        <p className="auth-footer-outside">
+          <span className="auth-link" onClick={handleForgotPassword}>Mot de passe oublié?</span>
+        </p>
+        
+        <p className="auth-footer-outside">
+          Vous n'avez pas de compte? <span className="auth-link" onClick={handleGoToSignup}>S'inscrire</span>
+        </p>
       </div>
     </div>
   );
