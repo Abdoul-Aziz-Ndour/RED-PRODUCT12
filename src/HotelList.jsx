@@ -1,8 +1,19 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import './Dashboard.css';
 
 function HotelList() {
   const navigate = useNavigate();
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    address: '',
+    email: '',
+    phone: '',
+    price: '',
+    currency: 'F XOF',
+    image: null
+  });
 
   const hotels = [
     {
@@ -63,6 +74,41 @@ function HotelList() {
     }
   ];
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({
+        ...prev,
+        image: file
+      }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Données du formulaire:', formData);
+    alert('Hôtel créé avec succès!');
+    setShowCreateModal(false);
+    // Réinitialiser le formulaire
+    setFormData({
+      name: '',
+      address: '',
+      email: '',
+      phone: '',
+      price: '',
+      currency: 'F XOF',
+      image: null
+    });
+  };
+
   return (
     <div className="app-layout">
       {/* Sidebar */}
@@ -120,13 +166,20 @@ function HotelList() {
         <div className="top-bar">
           <h1 className="page-title">Liste des hôtels</h1>
           <div className="top-bar-actions">
-            <div className="search-box">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="m21 21-4.35-4.35"/>
-              </svg>
-              <input type="text" placeholder="Recherche" />
+            {/* Section recherche + bouton en dessous */}
+            <div className="search-section">
+              <div className="search-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="text" placeholder="Recherche" />
+              </div>
+              <button className="btn-create-hotel" onClick={() => setShowCreateModal(true)}>
+                + Créer un nouveau hôtel
+              </button>
             </div>
+            
             <div className="notification-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
@@ -138,9 +191,10 @@ function HotelList() {
               alt="Profile" 
               className="profile-pic"
             />
+            {/* Icône de déconnexion corrigée */}
             <button className="logout-icon" onClick={() => navigate('/')}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M14 5l7 7-7 7M3 12h14" />
               </svg>
             </button>
           </div>
@@ -152,9 +206,6 @@ function HotelList() {
             <h2 className="hotels-title">
               Hôtels <span className="hotels-count">8</span>
             </h2>
-            <button className="btn-create-hotel">
-              + Créer un nouveau hôtel
-            </button>
           </div>
 
           <div className="hotels-grid">
@@ -177,6 +228,129 @@ function HotelList() {
           </div>
         </div>
       </main>
+
+      {/* Modal Create Hotel */}
+      {showCreateModal && (
+        <div className="modal-overlay" onClick={() => setShowCreateModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <button className="back-btn" onClick={() => setShowCreateModal(false)}>
+                ← CRÉER UN NOUVEAU HÔTEL
+              </button>
+            </div>
+
+            <form className="hotel-form" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Nom de l'hôtel</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="CAP Marniane"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Adresse</label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    placeholder="Les iles du saloum, Mar Lodj"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>E-mail</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="information@gmail.com"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Numéro de téléphone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="+221 77 777 77 77"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Prix par nuit</label>
+                  <input
+                    type="text"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleInputChange}
+                    placeholder="25.000 XOF"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Devise</label>
+                  <select
+                    name="currency"
+                    value={formData.currency}
+                    onChange={handleInputChange}
+                  >
+                    <option value="F XOF">F XOF</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-group-full">
+                <label>Ajouter une photo</label>
+                <div className="image-upload-area">
+                  <input
+                    type="file"
+                    id="image-upload"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ display: 'none' }}
+                  />
+                  <label htmlFor="image-upload" className="upload-label">
+                    <div className="upload-icon">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                      </svg>
+                    </div>
+                    <p>Ajouter une photo</p>
+                  </label>
+                  {formData.image && (
+                    <p className="file-name">{formData.image.name}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="form-actions">
+                <button type="submit" className="submit-btn">
+                  Enregistrer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
