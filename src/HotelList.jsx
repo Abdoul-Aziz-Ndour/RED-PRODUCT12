@@ -97,7 +97,6 @@ function HotelList() {
     console.log('Données du formulaire:', formData);
     alert('Hôtel créé avec succès!');
     setShowCreateModal(false);
-    // Réinitialiser le formulaire
     setFormData({
       name: '',
       address: '',
@@ -110,124 +109,70 @@ function HotelList() {
   };
 
   return (
-    <div className="app-layout">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="sidebar-header">
-          <div className="sidebar-logo-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-            </svg>
+    <main className="main-content">
+      {/* Top Bar */}
+      <div className="top-bar">
+        <h1 className="page-title">Liste des hôtels</h1>
+        <div className="top-bar-actions">
+          <div className="search-section">
+            <div className="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+              </svg>
+              <input type="text" placeholder="Recherche" />
+            </div>
+            <button className="btn-create-hotel" onClick={() => setShowCreateModal(true)}>
+              + Créer un nouveau hôtel
+            </button>
           </div>
-          <span className="sidebar-logo-text">RED PRODUCT</span>
-        </div>
-
-        <div className="sidebar-section">
-          <p className="sidebar-section-title">Principal</p>
-          <nav className="sidebar-nav">
-            <button className="sidebar-item" onClick={() => navigate('/dashboard')}>
-              <span className="sidebar-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                </svg>
-              </span>
-              Dashboard
-            </button>
-            <button className="sidebar-item active" onClick={() => navigate('/hotels')}>
-              <span className="sidebar-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v13h2v-2h18v2h2v-9c0-2.21-1.79-4-4-4z"/>
-                </svg>
-              </span>
-              Liste des hôtels
-            </button>
-          </nav>
-        </div>
-
-        <div className="sidebar-user">
+          
+          <div className="notification-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
+            </svg>
+            <span className="notification-badge">3</span>
+          </div>
           <img 
             src="https://i.pravatar.cc/150?img=12" 
-            alt="User" 
-            className="user-avatar"
+            alt="Profile" 
+            className="profile-pic"
           />
-          <div className="user-info">
-            <p className="user-name">Abdoul aziz Ndour</p>
-            <p className="user-status">
-              <span className="status-dot"></span>
-              en ligne
-            </p>
-          </div>
+          <button className="logout-icon" onClick={() => navigate('/')}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M14 5l7 7-7 7M3 12h14" />
+            </svg>
+          </button>
         </div>
-      </aside>
+      </div>
 
-      {/* Main Content */}
-      <main className="main-content">
-        {/* Top Bar */}
-        <div className="top-bar">
-          <h1 className="page-title">Liste des hôtels</h1>
-          <div className="top-bar-actions">
-            {/* Section recherche + bouton en dessous */}
-            <div className="search-section">
-              <div className="search-box">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="11" cy="11" r="8"/>
-                  <path d="m21 21-4.35-4.35"/>
-                </svg>
-                <input type="text" placeholder="Recherche" />
+      {/* Hotels List Content */}
+      <div className="hotels-list-content">
+        <div className="hotels-header">
+          <h2 className="hotels-title">
+            Hôtels <span className="hotels-count">8</span>
+          </h2>
+        </div>
+
+        <div className="hotels-grid">
+          {hotels.map((hotel) => (
+            <div key={hotel.id} className="hotel-card">
+              <div className="hotel-image-container">
+                <img 
+                  src={hotel.image} 
+                  alt={hotel.nom}
+                  className="hotel-image"
+                />
               </div>
-              <button className="btn-create-hotel" onClick={() => setShowCreateModal(true)}>
-                + Créer un nouveau hôtel
-              </button>
-            </div>
-            
-            <div className="notification-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
-              </svg>
-              <span className="notification-badge">3</span>
-            </div>
-            <img 
-              src="https://i.pravatar.cc/150?img=12" 
-              alt="Profile" 
-              className="profile-pic"
-            />
-            {/* Icône de déconnexion corrigée */}
-            <button className="logout-icon" onClick={() => navigate('/')}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M14 5l7 7-7 7M3 12h14" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Hotels List Content */}
-        <div className="hotels-list-content">
-          <div className="hotels-header">
-            <h2 className="hotels-title">
-              Hôtels <span className="hotels-count">8</span>
-            </h2>
-          </div>
-
-          <div className="hotels-grid">
-            {hotels.map((hotel) => (
-              <div key={hotel.id} className="hotel-card">
-                <div className="hotel-image-container">
-                  <img 
-                    src={hotel.image} 
-                    alt={hotel.nom}
-                    className="hotel-image"
-                  />
-                </div>
-                <div className="hotel-details">
-                  <p className="hotel-address">{hotel.adresse}</p>
-                  <h3 className="hotel-name">{hotel.nom}</h3>
-                  <p className="hotel-price">{hotel.prix}</p>
-                </div>
+              <div className="hotel-details">
+                <p className="hotel-address">{hotel.adresse}</p>
+                <h3 className="hotel-name">{hotel.nom}</h3>
+                <p className="hotel-price">{hotel.prix}</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </main>
+      </div>
 
       {/* Modal Create Hotel */}
       {showCreateModal && (
@@ -351,7 +296,7 @@ function HotelList() {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }
 

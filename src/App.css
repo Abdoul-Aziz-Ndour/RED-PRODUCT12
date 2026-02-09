@@ -29,24 +29,36 @@
 .logo-icon {
   background-color: white;
   color: #333;
-  padding: 4px 10px;
-  margin-right: 12px;
-  border-radius: 3px;
-  font-size: 1.3rem;
+  padding: 10px 12px;
+  margin-right: 15px;
+  border-radius: 6px;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-text {
   color: white;
+  font-size: 1.3rem;
 }
 
 /* Carte de connexion */
 .login-card {
   background-color: white;
-  padding: 45px 40px;
-  border-radius: 8px;
+  padding: 50px 45px;
+  border-radius: 12px;
   width: 100%;
-  max-width: 420px;
+  max-width: 520px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.login-title {
+  color: #333;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+  text-align: left;
+  font-weight: 500;
 }
 
 .login-subtitle {
@@ -55,6 +67,13 @@
   font-size: 0.95rem;
   text-align: left;
   font-weight: 400;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 0.9rem;
+  text-align: left;
 }
 
 /* Formulaire */
@@ -66,25 +85,23 @@
 
 .input-field {
   border: none;
-  border-bottom: 1px solid #ddd;
-  padding: 12px 0;
+  border-bottom: 2px solid #e2e8f0;
+  padding: 15px 0;
   outline: none;
   font-size: 0.95rem;
   color: #333;
-  transition: border-color 0.3s;
+  background-color: #f7fafc;
+  transition: all 0.3s;
 }
 
 .input-field:focus {
   border-bottom-color: #f39c12;
-}
-
-.input-field:valid:not(:placeholder-shown) {
-  background-color: #e8f4f8;
-  border-bottom-color: #0984e3;
+  background-color: #edf2f7;
 }
 
 .input-field::placeholder {
-  color: #999;
+  color: #a0aec0;
+  font-weight: 400;
 }
 
 .checkbox-container {
@@ -97,31 +114,34 @@
 }
 
 .checkbox-container input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   cursor: pointer;
 }
 
 .checkbox-container label {
   cursor: pointer;
   user-select: none;
+  color: #4a5568;
 }
 
 .login-button {
   background-color: #4a4d52;
   color: white;
   border: none;
-  padding: 14px;
-  border-radius: 4px;
+  padding: 16px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 500;
-  margin-top: 5px;
-  transition: background 0.3s ease;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: all 0.3s ease;
 }
 
 .login-button:hover {
   background-color: #36383c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .login-button:active {
@@ -131,31 +151,32 @@
 /* Liens du bas */
 .footer-links {
   text-align: center;
-  margin-top: 25px;
+  margin-top: 30px;
 }
 
-.forgot-password {
-  color: #f39c12;
+.forgot-password-link {
+  color: #f6ad55;
   text-decoration: none;
   display: block;
   margin-bottom: 18px;
   font-size: 0.9rem;
+  font-weight: 500;
   transition: color 0.2s;
 }
 
-.forgot-password:hover {
-  color: #e08e0b;
+.forgot-password-link:hover {
+  color: #ed8936;
   text-decoration: underline;
 }
 
 .signup-text {
-  color: #666;
+  color: #718096;
   font-size: 0.9rem;
   margin: 0;
 }
 
 .signup-link {
-  color: #f39c12;
+  color: #f6ad55;
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;
@@ -163,11 +184,18 @@
 }
 
 .signup-link:hover {
-  color: #e08e0b;
+  color: #ed8936;
   text-decoration: underline;
 }
 
 /* ========== PAGE MOT DE PASSE OUBLIÉ ========== */
+.forgot-password-view,
+.signup-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .forgot-password-title {
   color: #333;
   font-size: 1.3rem;
@@ -184,6 +212,25 @@
   text-align: left;
 }
 
+.back-button {
+  width: 100%;
+  padding: 15px;
+  background-color: transparent;
+  color: #4a5568;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.back-button:hover {
+  background-color: #f7fafc;
+  border-color: #cbd5e0;
+}
+
 .back-to-login {
   color: #666;
   font-size: 0.9rem;
@@ -192,7 +239,7 @@
 }
 
 .login-link {
-  color: #f39c12;
+  color: #f6ad55;
   cursor: pointer;
   font-weight: 600;
   text-decoration: none;
@@ -200,18 +247,32 @@
 }
 
 .login-link:hover {
-  color: #e08e0b;
+  color: #ed8936;
   text-decoration: underline;
 }
 
 /* Responsive */
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .login-card {
     margin: 20px;
-    padding: 35px 25px;
+    padding: 40px 30px;
   }
   
   .logo-section {
     font-size: 1rem;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+  }
+
+  .login-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .login-card {
+    padding: 35px 25px;
   }
 }
