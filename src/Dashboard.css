@@ -773,6 +773,7 @@ body {
     gap: 12px;
   }
 
+
   .btn-create-hotel {
     font-size: 12px;
     padding: 8px 16px;
@@ -781,4 +782,6 @@ body {
   .search-section {
     margin-right: 0;
   }
+  
+  
 }

@@ -14,6 +14,7 @@
   background: linear-gradient(135deg, #4a5057 0%, #33363a 100%);
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
 }
 
 /* Logo */
@@ -251,28 +252,264 @@
   text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .login-card {
-    margin: 20px;
-    padding: 40px 30px;
+/* ========== MEDIA QUERIES ========== */
+
+/* 💻 Tablettes et petits écrans (max-width: 768px) */
+@media (max-width: 768px) {
+  .logo-section {
+    font-size: 1.1rem;
+    margin-bottom: 35px;
   }
-  
+
+  .logo-icon {
+    padding: 8px 10px;
+    font-size: 1.3rem;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+  }
+
+  .login-card {
+    max-width: 480px;
+    padding: 45px 40px;
+  }
+}
+
+/* 📱 Téléphones (max-width: 600px) */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 15px;
+  }
+
   .logo-section {
     font-size: 1rem;
+    margin-bottom: 30px;
+  }
+
+  .logo-icon {
+    padding: 6px 8px;
+    font-size: 1.2rem;
+    margin-right: 12px;
   }
 
   .logo-text {
     font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+
+  .login-card {
+    margin: 0;
+    padding: 40px 30px;
+    max-width: 100%;
   }
 
   .login-title {
     font-size: 1rem;
+    margin-bottom: 35px;
+  }
+
+  .login-form {
+    gap: 20px;
+  }
+
+  .input-field {
+    padding: 12px 0;
+    font-size: 0.9rem;
+  }
+
+  .login-button {
+    padding: 15px;
+    font-size: 0.95rem;
+  }
+
+  .footer-links {
+    margin-top: 25px;
+  }
+
+  .forgot-password-link,
+  .signup-text {
+    font-size: 0.85rem;
   }
 }
 
+/* 📱 Petits téléphones (max-width: 500px) */
 @media (max-width: 500px) {
   .login-card {
     padding: 35px 25px;
+  }
+
+  .logo-section {
+    margin-bottom: 25px;
+  }
+
+  .login-title {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+
+  .checkbox-container {
+    font-size: 0.85rem;
+  }
+
+  .checkbox-container input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .back-button {
+    padding: 13px;
+    font-size: 0.9rem;
+  }
+}
+
+/* 📱 Très petits téléphones (max-width: 360px) */
+@media (max-width: 360px) {
+  .login-container {
+    padding: 10px;
+  }
+
+  .logo-section {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .logo-icon {
+    padding: 5px 7px;
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .login-card {
+    padding: 30px 20px;
+  }
+
+  .login-title {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+
+  .login-form {
+    gap: 18px;
+  }
+
+  .input-field {
+    padding: 10px 0;
+    font-size: 0.85rem;
+  }
+
+  .login-button {
+    padding: 14px;
+    font-size: 0.9rem;
+  }
+
+  .checkbox-container {
+    font-size: 0.8rem;
+  }
+
+  .footer-links {
+    margin-top: 20px;
+  }
+
+  .forgot-password-link,
+  .signup-text {
+    font-size: 0.8rem;
+  }
+}
+
+/* 📱 Téléphones avec petite hauteur (landscape mode) */
+@media (max-height: 650px) {
+  .login-container {
+    padding: 15px 20px;
+    min-height: auto;
+  }
+
+  .logo-section {
+    margin-bottom: 20px;
+  }
+
+  .login-card {
+    padding: 30px 35px;
+    margin-top: 0;
+  }
+
+  .login-title {
+    margin-bottom: 25px;
+  }
+
+  .login-form {
+    gap: 18px;
+  }
+
+  .footer-links {
+    margin-top: 20px;
+  }
+}
+
+/* 📱 Mode paysage pour très petits écrans */
+@media (max-height: 500px) and (max-width: 900px) {
+  .login-container {
+    padding: 10px 15px;
+  }
+
+  .logo-section {
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+  }
+
+  .logo-icon {
+    padding: 4px 6px;
+    font-size: 1rem;
+  }
+
+  .login-card {
+    padding: 20px 30px;
+  }
+
+  .login-title {
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+  }
+
+  .login-form {
+    gap: 15px;
+  }
+
+  .input-field {
+    padding: 10px 0;
+  }
+
+  .login-button {
+    padding: 12px;
+  }
+
+  .footer-links {
+    margin-top: 15px;
+  }
+}
+
+/* 🖥️ Grands écrans (min-width: 1200px) */
+@media (min-width: 1200px) {
+  .login-card {
+    max-width: 550px;
+    padding: 55px 50px;
+  }
+
+  .logo-section {
+    font-size: 1.4rem;
+    margin-bottom: 50px;
+  }
+
+  .logo-icon {
+    font-size: 1.6rem;
+    padding: 12px 14px;
+  }
+
+  .logo-text {
+    font-size: 1.4rem;
   }
 }
