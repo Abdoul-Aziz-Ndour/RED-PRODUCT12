@@ -130,19 +130,6 @@ function HotelList({ handleLogout }) {
 
   return (
     <div className="app-layout">
-      {/* Bouton Hamburger pour naviguer vers Dashboard */}
-      {!sidebarOpen && (
-        <button 
-          className="hamburger-btn-open"
-          onClick={handleHamburgerClick}
-          aria-label="Aller au Dashboard"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      )}
-
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
