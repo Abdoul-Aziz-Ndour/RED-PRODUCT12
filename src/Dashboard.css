@@ -12,6 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f5f5f5;
+  overflow-x: hidden;
 }
 
 /* ========== Layout ========== */
@@ -19,6 +20,69 @@ body {
   display: flex;
   height: 100vh;
   background-color: #f5f5f5;
+}
+
+/* ========== Bouton Hamburger (3 barres) pour OUVRIR ========== */
+.hamburger-btn-open {
+  width: 45px;
+  height: 45px;
+  background: #2c2c2c;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.hamburger-btn-open:hover {
+  background: #3a3a3a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hamburger-btn-open span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* ========== Top Bar Left (contient hamburger + titre) ========== */
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ========== Bouton X pour FERMER (dans la sidebar) ========== */
+.sidebar-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-close-btn svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* ========== Sidebar ========== */
@@ -29,6 +93,56 @@ body {
   display: flex;
   flex-direction: column;
   padding: 24px 0;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Overlay pour fermer la sidebar en cliquant à l'extérieur */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+/* Sur desktop, pas besoin d'overlay en mode normal */
+@media (min-width: 769px) {
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* Sur mobile, afficher l'overlay quand sidebar ouverte */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar.open ~ .sidebar-overlay {
+    display: block;
+  }
 }
 
 .sidebar-header {
@@ -48,12 +162,14 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+  flex-shrink: 0;
 }
 
 .sidebar-logo-text {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .sidebar-section {
@@ -127,12 +243,16 @@ body {
 
 .user-info {
   flex: 1;
+  min-width: 0;
 }
 
 .user-name {
   font-size: 13px;
   font-weight: 500;
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-status {
@@ -157,6 +277,13 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 0;
+  margin-left: 260px;
+  transition: margin-left 0.3s ease;
+}
+
+.main-content.sidebar-closed {
+  margin-left: 0;
 }
 
 /* ========== Top Bar ========== */
@@ -167,6 +294,8 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e5e5e5;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .page-title {
@@ -392,6 +521,10 @@ body {
   background: linear-gradient(135deg, #f39c12, #e67e22);
 }
 
+.stat-icon.orange {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
 .stat-icon.red {
   background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
@@ -531,7 +664,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 2000;
   animation: fadeIn 0.2s ease-in;
 }
 
@@ -716,13 +849,42 @@ body {
 }
 
 /* ========== Responsive Design ========== */
+
+/* Tablettes (Moins de 1024px) */
 @media (max-width: 1400px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobiles et tablettes (Moins de 768px) */
 @media (max-width: 768px) {
+  /* Sidebar en mode mobile */
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Afficher overlay quand sidebar ouverte */
+  .sidebar.open ~ .sidebar-overlay {
+    display: block;
+  }
+
+  /* Main content occupe toute la largeur sur mobile */
+  .main-content {
+    margin-left: 0 !important;
+  }
+
+  /* Stats en une colonne */
   .stats-grid {
     grid-template-columns: 1fr;
   }
@@ -748,6 +910,7 @@ body {
     height: 60px;
   }
 
+  /* Formulaire en une colonne */
   .form-row {
     grid-template-columns: 1fr;
   }
@@ -761,18 +924,30 @@ body {
     padding: 32px 16px;
   }
 
+  /* Hotels grid en une colonne */
   .hotels-grid {
     grid-template-columns: 1fr;
   }
 
+  /* Top bar responsive */
+  .search-box {
+    width: 100%;
+  }
+
   .search-box input {
-    width: 200px;
+    width: 100%;
+  }
+
+  .top-bar {
+    padding: 15px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .top-bar-actions {
     gap: 12px;
+    width: 100%;
   }
-
 
   .btn-create-hotel {
     font-size: 12px;
@@ -781,7 +956,34 @@ body {
 
   .search-section {
     margin-right: 0;
+    width: 100%;
   }
-  
-  
+}
+
+/* Très petits écrans (Moins de 480px) */
+@media (max-width: 480px) {
+  .welcome-section h2 {
+    font-size: 22px;
+  }
+
+  .stat-card {
+    padding: 20px;
+    gap: 15px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+  }
+
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .hamburger-btn {
+    top: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+  }
 }

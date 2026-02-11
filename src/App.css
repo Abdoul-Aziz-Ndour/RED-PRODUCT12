@@ -1,4 +1,4 @@
-/* Arrière-plan principal */
+/* ========== CONFIGURATION DE BASE ========== */
 #root {
   width: 100%;
   margin: 0;
@@ -14,10 +14,10 @@
   background: linear-gradient(135deg, #4a5057 0%, #33363a 100%);
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 20px;
+  padding: 20px; /* Évite que la carte touche les bords sur mobile */
 }
 
-/* Logo */
+/* ========== LOGO ========== */
 .logo-section {
   display: flex;
   align-items: center;
@@ -30,36 +30,25 @@
 .logo-icon {
   background-color: white;
   color: #333;
-  padding: 10px 12px;
-  margin-right: 15px;
-  border-radius: 6px;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 4px 10px;
+  margin-right: 12px;
+  border-radius: 3px;
+  font-size: 1.3rem;
 }
 
 .logo-text {
   color: white;
-  font-size: 1.3rem;
 }
 
-/* Carte de connexion */
+/* ========== CARTE DE CONNEXION ========== */
 .login-card {
   background-color: white;
-  padding: 50px 45px;
-  border-radius: 12px;
+  padding: 45px 40px;
+  border-radius: 8px;
   width: 100%;
-  max-width: 520px;
+  max-width: 420px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-}
-
-.login-title {
-  color: #333;
-  margin-bottom: 40px;
-  font-size: 1.1rem;
-  text-align: left;
-  font-weight: 500;
+  box-sizing: border-box; /* Important pour le padding */
 }
 
 .login-subtitle {
@@ -70,14 +59,7 @@
   font-weight: 400;
 }
 
-.subtitle {
-  color: #666;
-  margin-bottom: 25px;
-  font-size: 0.9rem;
-  text-align: left;
-}
-
-/* Formulaire */
+/* ========== FORMULAIRE ========== */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -86,23 +68,21 @@
 
 .input-field {
   border: none;
-  border-bottom: 2px solid #e2e8f0;
-  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+  padding: 12px 0;
   outline: none;
   font-size: 0.95rem;
   color: #333;
-  background-color: #f7fafc;
-  transition: all 0.3s;
+  transition: border-color 0.3s;
+  background: transparent;
 }
 
 .input-field:focus {
   border-bottom-color: #f39c12;
-  background-color: #edf2f7;
 }
 
 .input-field::placeholder {
-  color: #a0aec0;
-  font-weight: 400;
+  color: #999;
 }
 
 .checkbox-container {
@@ -115,401 +95,262 @@
 }
 
 .checkbox-container input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
-}
-
-.checkbox-container label {
-  cursor: pointer;
-  user-select: none;
-  color: #4a5568;
 }
 
 .login-button {
   background-color: #4a4d52;
   color: white;
   border: none;
-  padding: 16px;
-  border-radius: 6px;
+  padding: 14px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 600;
-  margin-top: 10px;
+  font-weight: 500;
+  margin-top: 5px;
   transition: all 0.3s ease;
 }
 
 .login-button:hover {
   background-color: #36383c;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .login-button:active {
   transform: scale(0.98);
 }
 
-/* Liens du bas */
+/* ========== LIENS ========== */
 .footer-links {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 25px;
 }
 
-.forgot-password-link {
-  color: #f6ad55;
+.forgot-password, .signup-link, .login-link {
+  color: #f39c12;
   text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot-password {
   display: block;
   margin-bottom: 18px;
   font-size: 0.9rem;
-  font-weight: 500;
-  transition: color 0.2s;
 }
 
-.forgot-password-link:hover {
-  color: #ed8936;
-  text-decoration: underline;
-}
-
-.signup-text {
-  color: #718096;
+.signup-text, .back-to-login {
+  color: #666;
   font-size: 0.9rem;
-  margin: 0;
 }
 
-.signup-link {
-  color: #f6ad55;
-  text-decoration: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.signup-link:hover {
-  color: #ed8936;
+.forgot-password:hover, .signup-link:hover, .login-link:hover {
+  color: #e08e0b;
   text-decoration: underline;
 }
 
 /* ========== PAGE MOT DE PASSE OUBLIÉ ========== */
-.forgot-password-view,
-.signup-view {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .forgot-password-title {
   color: #333;
   font-size: 1.3rem;
   font-weight: 600;
-  margin: 0 0 15px 0;
-  text-align: left;
+  margin-bottom: 15px;
 }
 
 .forgot-password-description {
   color: #666;
   font-size: 0.9rem;
   line-height: 1.6;
-  margin: 0 0 30px 0;
-  text-align: left;
+  margin-bottom: 30px;
 }
 
-.back-button {
-  width: 100%;
-  padding: 15px;
-  background-color: transparent;
-  color: #4a5568;
-  border: 2px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
+/* ========== MEDIA QUERIES (RESPONSIVE) ========== */
 
-.back-button:hover {
-  background-color: #f7fafc;
-  border-color: #cbd5e0;
-}
-
-.back-to-login {
-  color: #666;
-  font-size: 0.9rem;
-  margin: 0;
-  text-align: center;
-}
-
-.login-link {
-  color: #f6ad55;
-  cursor: pointer;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.login-link:hover {
-  color: #ed8936;
-  text-decoration: underline;
-}
-
-/* ========== MEDIA QUERIES ========== */
-
-/* 💻 Tablettes et petits écrans (max-width: 768px) */
-@media (max-width: 768px) {
-  .logo-section {
-    font-size: 1.1rem;
-    margin-bottom: 35px;
-  }
-
-  .logo-icon {
-    padding: 8px 10px;
-    font-size: 1.3rem;
-  }
-
-  .logo-text {
-    font-size: 1.2rem;
-  }
-
+/* Tablettes (moins de 768px) */
+@media screen and (max-width: 768px) {
   .login-card {
-    max-width: 480px;
-    padding: 45px 40px;
-  }
-}
-
-/* 📱 Téléphones (max-width: 600px) */
-@media (max-width: 600px) {
-  .login-container {
-    padding: 15px;
-  }
-
-  .logo-section {
-    font-size: 1rem;
-    margin-bottom: 30px;
-  }
-
-  .logo-icon {
-    padding: 6px 8px;
-    font-size: 1.2rem;
-    margin-right: 12px;
-  }
-
-  .logo-text {
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-  }
-
-  .login-card {
-    margin: 0;
+    max-width: 400px;
     padding: 40px 30px;
+  }
+}
+
+/* Mobiles (moins de 480px) */
+@media screen and (max-width: 480px) {
+  .login-container {
+    justify-content: flex-start; /* Évite d'être caché par le clavier mobile */
+    padding-top: 40px;
+  }
+
+  .login-card {
     max-width: 100%;
+    padding: 30px 20px;
+    box-shadow: none; /* Look plus épuré sur mobile */
+    border-radius: 12px;
   }
 
-  .login-title {
-    font-size: 1rem;
-    margin-bottom: 35px;
-  }
-
-  .login-form {
-    gap: 20px;
+  .logo-section {
+    margin-bottom: 30px;
   }
 
   .input-field {
-    padding: 12px 0;
-    font-size: 0.9rem;
+    font-size: 16px; /* Empêche l'auto-zoom sur iOS */
   }
 
   .login-button {
-    padding: 15px;
-    font-size: 0.95rem;
-  }
-
-  .footer-links {
-    margin-top: 25px;
-  }
-
-  .forgot-password-link,
-  .signup-text {
-    font-size: 0.85rem;
+    padding: 16px; /* Plus facile à cliquer au doigt */
   }
 }
 
-/* 📱 Petits téléphones (max-width: 500px) */
-@media (max-width: 500px) {
-  .login-card {
-    padding: 35px 25px;
-  }
-
-  .logo-section {
-    margin-bottom: 25px;
-  }
-
-  .login-title {
-    font-size: 0.95rem;
-    margin-bottom: 30px;
-  }
-
-  .checkbox-container {
-    font-size: 0.85rem;
-  }
-
-  .checkbox-container input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-  }
-
-  .back-button {
-    padding: 13px;
-    font-size: 0.9rem;
-  }
-}
-
-/* 📱 Très petits téléphones (max-width: 360px) */
-@media (max-width: 360px) {
+/* Écrans très petits ou mode paysage court */
+@media screen and (max-height: 600px) {
   .login-container {
-    padding: 10px;
+    padding: 20px 0;
   }
-
   .logo-section {
-    font-size: 0.9rem;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
+}
+/* ========== Fichier App.css ========== */
+#root {
+  width: 100%;
+}
 
-  .logo-icon {
-    padding: 5px 7px;
-    font-size: 1rem;
-    margin-right: 10px;
-  }
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #444a51; /* Gris foncé de l'image */
+  background-image: url('https://www.transparenttextures.com'); /* Texture légère style image */
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  padding: 20px;
+}
 
-  .logo-text {
-    font-size: 1rem;
-  }
+/* Logo Section */
+.logo-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
 
+.logo-icon {
+  background-color: white;
+  color: #444a51;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+/* Carte blanche */
+.login-card {
+  background-color: white;
+  padding: 40px;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.login-subtitle {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Formulaire */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.input-field {
+  border: none;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  outline: none;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.input-field:focus {
+  border-bottom-color: #ccc;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+  font-size: 0.9rem;
+  margin: 10px 0;
+}
+
+/* Bouton Noir */
+.login-button {
+  background-color: #444a51;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.login-button:hover {
+  background-color: #33383d;
+}
+
+/* Liens en bas */
+.footer-links {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.footer-links a, .footer-links p {
+  color: #f39c12; /* Jaune orangé de l'image */
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.footer-links p {
+  color: white;
+  margin-top: 20px;
+}
+
+.footer-links span {
+  color: #f39c12;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
   .login-card {
     padding: 30px 20px;
   }
-
-  .login-title {
-    font-size: 0.9rem;
-    margin-bottom: 25px;
-  }
-
-  .login-form {
-    gap: 18px;
-  }
-
-  .input-field {
-    padding: 10px 0;
-    font-size: 0.85rem;
-  }
-
-  .login-button {
-    padding: 14px;
-    font-size: 0.9rem;
-  }
-
-  .checkbox-container {
-    font-size: 0.8rem;
-  }
-
-  .footer-links {
-    margin-top: 20px;
-  }
-
-  .forgot-password-link,
-  .signup-text {
-    font-size: 0.8rem;
-  }
 }
-
-/* 📱 Téléphones avec petite hauteur (landscape mode) */
-@media (max-height: 650px) {
-  .login-container {
-    padding: 15px 20px;
-    min-height: auto;
-  }
-
-  .logo-section {
-    margin-bottom: 20px;
-  }
-
-  .login-card {
-    padding: 30px 35px;
-    margin-top: 0;
-  }
-
-  .login-title {
-    margin-bottom: 25px;
-  }
-
-  .login-form {
-    gap: 18px;
-  }
-
-  .footer-links {
-    margin-top: 20px;
-  }
+.logout-icon-btn {
+  background: none;
+  border: none;
+  color: #adb5bd;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
 }
-
-/* 📱 Mode paysage pour très petits écrans */
-@media (max-height: 500px) and (max-width: 900px) {
-  .login-container {
-    padding: 10px 15px;
-  }
-
-  .logo-section {
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-  }
-
-  .logo-icon {
-    padding: 4px 6px;
-    font-size: 1rem;
-  }
-
-  .login-card {
-    padding: 20px 30px;
-  }
-
-  .login-title {
-    margin-bottom: 20px;
-    font-size: 0.95rem;
-  }
-
-  .login-form {
-    gap: 15px;
-  }
-
-  .input-field {
-    padding: 10px 0;
-  }
-
-  .login-button {
-    padding: 12px;
-  }
-
-  .footer-links {
-    margin-top: 15px;
-  }
-}
-
-/* 🖥️ Grands écrans (min-width: 1200px) */
-@media (min-width: 1200px) {
-  .login-card {
-    max-width: 550px;
-    padding: 55px 50px;
-  }
-
-  .logo-section {
-    font-size: 1.4rem;
-    margin-bottom: 50px;
-  }
-
-  .logo-icon {
-    font-size: 1.6rem;
-    padding: 12px 14px;
-  }
-
-  .logo-text {
-    font-size: 1.4rem;
-  }
+.logout-icon-btn:hover {
+  color: #e74c3c; /* Devient rouge au survol */
 }

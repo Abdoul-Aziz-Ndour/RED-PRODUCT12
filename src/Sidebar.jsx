@@ -1,62 +1,65 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Dashboard.css';
 
-function Sidebar() {
+function Sidebar({ setSidebarOpen, handleLogout, sidebarOpen }) {
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+      {/* HEADER */}
       <div className="sidebar-header">
-        <div className="sidebar-logo-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-          </svg>
-        </div>
         <span className="sidebar-logo-text">RED PRODUCT</span>
+
+        {/* CLOSE BUTTON (mobile) */}
+        <button
+          className="close-sidebar"
+          onClick={() => setSidebarOpen(false)}
+        >
+          ✕
+        </button>
       </div>
 
-      <div className="sidebar-section">
-        <p className="sidebar-section-title">Principal</p>
-        <nav className="sidebar-nav">
-          <button 
-            className={`sidebar-item ${location.pathname === '/dashboard' ? 'active' : ''}`}
-            onClick={() => navigate('/dashboard')}
-          >
-            <span className="sidebar-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-              </svg>
-            </span>
-            Dashboard
-          </button>
-          <button 
-            className={`sidebar-item ${location.pathname === '/hotels' ? 'active' : ''}`}
-            onClick={() => navigate('/hotels')}
-          >
-            <span className="sidebar-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v13h2v-2h18v2h2v-9c0-2.21-1.79-4-4-4z"/>
-              </svg>
-            </span>
-            Liste des hôtels
-          </button>
-        </nav>
-      </div>
+      {/* NAV */}
+      <nav className="sidebar-nav">
+        <button
+          className={`sidebar-item ${
+            location.pathname === '/dashboard' ? 'active' : ''
+          }`}
+          onClick={() => {
+            navigate('/dashboard');
+            setSidebarOpen(false);
+          }}
+        >
+          Dashboard
+        </button>
 
+        <button
+          className={`sidebar-item ${
+            location.pathname === '/hotels' ? 'active' : ''
+          }`}
+          onClick={() => {
+            navigate('/hotels');
+            setSidebarOpen(false);
+          }}
+        >
+          Liste des hôtels
+        </button>
+      </nav>
+
+      {/* USER */}
       <div className="sidebar-user">
-        <img 
-          src="https://i.pravatar.cc/150?img=12" 
-          alt="User" 
-          className="user-avatar"
-        />
         <div className="user-info">
-          <p className="user-name">Abdoul aziz Ndour</p>
-          <p className="user-status">
-            <span className="status-dot"></span>
-            en ligne
-          </p>
+          <p className="user-name">Abdoul Aziz Ndour</p>
+          <p className="user-status">En ligne</p>
         </div>
+
+        <button
+          className="logout-btn"
+          onClick={handleLogout}
+        >
+          Déconnexion
+        </button>
       </div>
     </aside>
   );
