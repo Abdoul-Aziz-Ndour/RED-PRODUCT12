@@ -5,7 +5,8 @@ import './Dashboard.css';
 function HotelList({ handleLogout }) {
   const navigate = useNavigate();
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  // Sur mobile, sidebar fermée par défaut, sur desktop ouverte
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -124,8 +125,13 @@ function HotelList({ handleLogout }) {
   };
 
   const handleHamburgerClick = () => {
-    // Naviguer vers la page Dashboard
-    navigate('/dashboard');
+    // Sur mobile (largeur < 768px), toggle la sidebar
+    // Sur desktop, naviguer vers la page Dashboard
+    if (window.innerWidth < 768) {
+      toggleSidebar();
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   return (
@@ -133,18 +139,6 @@ function HotelList({ handleLogout }) {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
-          {/* Bouton X pour FERMER la sidebar */}
-          <button 
-            className="sidebar-close-btn"
-            onClick={toggleSidebar}
-            aria-label="Fermer le menu"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-          
           <div 
             className="sidebar-logo-icon" 
             onClick={handleLogoClick}
@@ -195,30 +189,20 @@ function HotelList({ handleLogout }) {
         </div>
       </aside>
 
-      {/* Overlay pour fermer la sidebar sur mobile */}
-      {sidebarOpen && (
-        <div 
-          className="sidebar-overlay" 
-          onClick={toggleSidebar}
-        ></div>
-      )}
-
       <main className={`main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
         {/* Top Bar */}
         <div className="top-bar">
           <div className="top-bar-left">
-            {/* Bouton Hamburger pour naviguer vers Dashboard */}
-            {!sidebarOpen && (
-              <button 
-                className="hamburger-btn-open"
-                onClick={handleHamburgerClick}
-                aria-label="Aller au Dashboard"
-              >
-                <span></span>
-                <span></span>
-                <span></span>
-              </button>
-            )}
+            {/* Bouton Hamburger */}
+            <button 
+              className="hamburger-btn-open"
+              onClick={handleHamburgerClick}
+              aria-label="Menu"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
             <h1 className="page-title">Liste des hôtels</h1>
           </div>
           <div className="top-bar-actions">
