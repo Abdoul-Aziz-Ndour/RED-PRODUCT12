@@ -1,49 +1,105 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Login from './Login';
 import Dashboard from './Dashboard';
 import HotelList from './HotelList';
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem('isLoggedIn') === 'true'
-  );
+// ==================== HOOKS PERSONNALISÉS ====================
 
-  const handleLogout = () => {
+/**
+ * Hook personnalisé pour gérer l'authentification
+ * Synchronise l'état avec localStorage
+ */
+const useAuth = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
+
+  // Fonction pour se connecter
+  const login = () => {
+    localStorage.setItem('isLoggedIn', 'true');
+    setIsLoggedIn(true);
+  };
+
+  // Fonction pour se déconnecter
+  const logout = () => {
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };
 
+  // Synchroniser avec localStorage si modifié dans un autre onglet
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'isLoggedIn') {
+        setIsLoggedIn(e.newValue === 'true');
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  return { isLoggedIn, login, logout };
+};
+
+// ==================== COMPOSANTS ====================
+
+/**
+ * Composant pour protéger les routes authentifiées
+ * Redirige vers la page de login si non connecté
+ */
+const ProtectedRoute = ({ isLoggedIn, children }) => {
+  return isLoggedIn ? children : <Navigate to="/" replace />;
+};
+
+/**
+ * Composant pour la route publique (Login)
+ * Redirige vers dashboard si déjà connecté
+ */
+const PublicRoute = ({ isLoggedIn, children }) => {
+  return isLoggedIn ? <Navigate to="/dashboard" replace /> : children;
+};
+
+// ==================== COMPOSANT PRINCIPAL ====================
+
+function App() {
+  const { isLoggedIn, login, logout } = useAuth();
+
   return (
     <Router>
       <Routes>
+        {/* Route publique - Page de connexion */}
         <Route
           path="/"
           element={
-            isLoggedIn ? (
-              <Navigate to="/dashboard" />
-            ) : (
-              <Login setIsLoggedIn={setIsLoggedIn} />
-            )
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <Login setIsLoggedIn={login} />
+            </PublicRoute>
           }
         />
 
+        {/* Routes protégées - Nécessitent authentification */}
         <Route
           path="/dashboard"
           element={
-            isLoggedIn ? <Dashboard handleLogout={handleLogout} /> : <Navigate to="/" />
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Dashboard handleLogout={logout} />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/hotels"
           element={
-            isLoggedIn ? <HotelList handleLogout={handleLogout} /> : <Navigate to="/" />
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <HotelList handleLogout={logout} />
+            </ProtectedRoute>
           }
         />
 
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* Route par défaut - Redirige vers la page d'accueil */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
