@@ -6,15 +6,7 @@ import './Dashboard.css';
 
 // Hook personnalisé pour gérer la sidebar responsive
 const useSidebarState = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setSidebarOpen(window.innerWidth >= 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
@@ -27,7 +19,7 @@ const useSidebarState = () => {
 // Composant Hamburger
 const HamburgerButton = ({ isOpen, onClick }) => (
   <button
-    className={`hamburger-btn ${isOpen ? 'active' : ''}`}
+    className="hamburger-btn"
     onClick={onClick}
   >
     <span></span>
@@ -61,7 +53,7 @@ const SidebarHeader = ({ onLogoClick }) => (
 );
 
 // Composant Navigation Sidebar
-const SidebarNavigation = ({ navigate, currentPage }) => {
+const SidebarNavigation = ({ navigate, currentPage, closeSidebar }) => {
   const navItems = [
     { label: 'Dashboard', path: '/dashboard', isActive: currentPage === 'dashboard' },
     { label: 'Liste des hôtels', path: '/hotels', isActive: currentPage === 'hotels' }
@@ -75,7 +67,10 @@ const SidebarNavigation = ({ navigate, currentPage }) => {
           <button
             key={index}
             className={`sidebar-item ${item.isActive ? 'active' : ''}`}
-            onClick={() => navigate(item.path)}
+            onClick={() => {
+              navigate(item.path);
+              closeSidebar();
+            }}
           >
             {item.label}
           </button>
@@ -104,20 +99,23 @@ const SidebarUser = () => (
 );
 
 // Composant Sidebar Complet
-const Sidebar = ({ isOpen, onLogoClick, navigate, currentPage }) => (
+const Sidebar = ({ isOpen, onLogoClick, navigate, currentPage, closeSidebar }) => (
   <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
     <SidebarHeader onLogoClick={onLogoClick} />
-    <SidebarNavigation navigate={navigate} currentPage={currentPage} />
+    <SidebarNavigation navigate={navigate} currentPage={currentPage} closeSidebar={closeSidebar} />
     <SidebarUser />
   </aside>
 );
 
-// Composant Top Bar
+// Composant Top Bar - AVEC ICÔNE LOGOUT
 const TopBar = ({ title, onLogout }) => (
   <div className="top-bar">
     <h1 className="page-title">{title}</h1>
     <div className="top-bar-actions">
       <div className="search-box">
+        <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
         <input type="text" placeholder="Recherche" />
       </div>
       <img
@@ -126,7 +124,9 @@ const TopBar = ({ title, onLogout }) => (
         className="profile-pic"
       />
       <button className="logout-icon" onClick={onLogout}>
-        Logout
+        <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+          <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+        </svg>
       </button>
     </div>
   </div>
@@ -141,7 +141,10 @@ const HotelsHeader = ({ count, onCreateClick }) => (
       <h2>Hôtels</h2>
       <span className="hotels-count">{count}</span>
     </div>
-    <button className="btn-create-hotel" onClick={onCreateClick}>
+    <button className="btn-create-hotel desktop-only" onClick={onCreateClick}>
+      + Créer un nouveau hôtel
+    </button>
+    <button className="btn-create-hotel mobile-only" onClick={onCreateClick}>
       + Créer un nouveau hôtel
     </button>
   </div>
@@ -210,10 +213,10 @@ const ImageUploadArea = ({ onImageChange, fileName }) => (
       onClick={() => document.getElementById('image-upload').click()}
     >
       <div className="upload-label">
-        <svg fill="currentColor" viewBox="0 0 24 24" width="32" height="32">
-          <path d="M19.5 5.25c0-1.38-1.12-2.5-2.5-2.5H7c-1.38 0-2.5 1.12-2.5 2.5v13.5c0 1.38 1.12 2.5 2.5 2.5h10c1.38 0 2.5-1.12 2.5-2.5V5.25zM17 18.5H7V5.25h10v13.25zm-4-5.5c0-.55-.45-1-1-1H8c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1zm-4-4.5c.55 0 1-.45 1-1V5.25H8V9c0 .55.45 1 1 1z"/>
+        <svg className="upload-icon" fill="currentColor" viewBox="0 0 24 24" width="48" height="48">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
         </svg>
-        <p>Ajouter une photo</p>
+        <p>Cliquez pour ajouter une photo</p>
       </div>
       <input
         type="file"
@@ -241,10 +244,12 @@ const CreateHotelModal = ({ isOpen, onClose, onSubmit, formData, onInputChange, 
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>CRÉER UN NOUVEAU HÔTEL</h2>
+          <button className="back-btn" onClick={onClose}>
+            ← RETOUR
+          </button>
         </div>
 
-        <form onSubmit={onSubmit}>
+        <form className="hotel-form" onSubmit={onSubmit}>
           <div className="form-row">
             <FormInput
               label="Nom de l'hôtel"
@@ -287,7 +292,7 @@ const CreateHotelModal = ({ isOpen, onClose, onSubmit, formData, onInputChange, 
               name="price"
               value={formData.price}
               onChange={onInputChange}
-              placeholder="25.000 XOF"
+              placeholder="25.000"
             />
             <FormSelect
               label="Devise"
@@ -336,7 +341,7 @@ function HotelList({ handleLogout }) {
     { id: 2, nom: 'King Fahd Palace', adresse: 'Rte des Almadies, Dakar', prix: '20.000 XOF par nuit', image: 'https://images.unsplash.com/photo-1549294413-26f195200c16?w=500&h=300&fit=crop' },
     { id: 3, nom: 'Radisson Blu Hotel', adresse: 'Rte de la Corniche O, Dakar 16868', prix: '22.000 XOF par nuit', image: 'https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?w=500&h=300&fit=crop' },
     { id: 4, nom: 'Pullman Dakar Teranga', adresse: "Place de l'indépendance, 10 Rue Ps, 29, Dakar", prix: '30.000 XOF par nuit', image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=500&h=300&fit=crop' },
-    { id: 5, nom: 'Hôtel Lac Rose', adresse: 'Lac Rose, Dakar', prix: '25.000 XOF par nuit', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&h=300&fit=crop' },
+    { id: 5, nom: 'Hôtel Lac Rose', adresse: 'Lac Rose, Dakar', prix: '25.000 XOF par nuit', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=500&h=300&fit=crop' },
     { id: 6, nom: 'Hôtel Saly', adresse: 'Mbour, Sénégal', prix: '20.000 XOF par nuit', image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=500&h=300&fit=crop' },
     { id: 7, nom: 'Palm Beach Resort & Spa', adresse: 'BP64, Saly 23000', prix: '22.000 XOF par nuit', image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=500&h=300&fit=crop' },
     { id: 8, nom: 'Pullman Dakar Teranga', adresse: "Place de l'indépendance, 10 Rue Ps, 29, Dakar", prix: '30.000 XOF par nuit', image: 'https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?w=500&h=300&fit=crop' }
@@ -387,6 +392,7 @@ function HotelList({ handleLogout }) {
         onLogoClick={handleLogoClick}
         navigate={navigate}
         currentPage="hotels"
+        closeSidebar={closeSidebar}
       />
 
       <main className="main-content">

@@ -22,7 +22,7 @@ body {
   background-color: #f5f5f5;
 }
 
-/* ========== Hamburger Menu ========== */
+/* ========== Hamburger Menu - RESTE TOUJOURS HAMBURGER ========== */
 .hamburger-btn {
   display: none;
   flex-direction: column;
@@ -52,19 +52,9 @@ body {
   border-radius: 2px;
 }
 
-.hamburger-btn.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
+/* PAS D'ANIMATION - Le hamburger reste toujours hamburger */
 
-.hamburger-btn.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger-btn.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -6px);
-}
-
-/* ========== Sidebar Overlay ========== */
+/* ========== Sidebar Overlay (TRANSPARENT - PAS DE FLOU) ========== */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -72,17 +62,18 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
   z-index: 999;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.1s ease;
 }
 
 .sidebar-overlay.active {
   display: block;
   opacity: 1;
   pointer-events: auto;
+  background-color: transparent;
 }
 
 /* ========== Sidebar ========== */
@@ -225,10 +216,10 @@ body {
   overflow: hidden;
 }
 
-/* ========== Top Bar ========== */
+/* ========== Top Bar - PADDING NORMAL SUR DESKTOP ========== */
 .top-bar {
   background-color: white;
-  padding: 20px 32px;
+  padding: 20px 32px; /* PAS de padding-left spécial sur desktop */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -848,8 +839,9 @@ body {
     margin-left: 0;
   }
 
+  /* IMPORTANT : Padding-left SEULEMENT sur mobile pour le hamburger */
   .top-bar {
-    padding-left: 75px;
+    padding-left: 75px !important;
   }
 }
 
@@ -952,7 +944,7 @@ body {
   }
 
   .top-bar {
-    padding: 14px 20px 14px 70px;
+    padding: 14px 20px 14px 70px !important;
   }
 
   .page-title {
@@ -1049,7 +1041,7 @@ body {
   }
 
   .top-bar {
-    padding: 12px 16px 12px 65px;
+    padding: 12px 16px 12px 65px !important;
   }
 
   .page-title {
@@ -1168,7 +1160,7 @@ body {
   }
 
   .top-bar {
-    padding: 10px 12px 10px 60px;
+    padding: 10px 12px 10px 60px !important;
   }
 
   .page-title {
@@ -1349,7 +1341,7 @@ body {
   }
 
   .top-bar {
-    padding: 8px 10px 8px 55px;
+    padding: 8px 10px 8px 55px !important;
   }
 
   .page-title {

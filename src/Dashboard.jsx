@@ -1,12 +1,11 @@
-
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './Dashboard.css';
 
-// Composant pour le bouton hamburger
+// Composant pour le bouton hamburger - CORRIGÉ : Reste toujours hamburger
 const HamburgerButton = ({ isOpen, onClick }) => (
   <button
-    className={`hamburger-btn ${isOpen ? 'active' : ''}`}
+    className="hamburger-btn"
     onClick={onClick}
   >
     <span></span>
@@ -53,7 +52,7 @@ const NavItem = ({ icon, label, isActive, onClick }) => (
 );
 
 // Composant pour la section de navigation
-const SidebarNavigation = ({ navigate }) => {
+const SidebarNavigation = ({ navigate, closeSidebar }) => {
   const navItems = [
     {
       icon: "M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z",
@@ -62,7 +61,7 @@ const SidebarNavigation = ({ navigate }) => {
       path: '/dashboard'
     },
     {
-      icon: "M7 11H5v7h2v-7zm4 0H9v7h2v-7zm4 0h-2v7h2v-7zm4 0h-2v7h2v-7zm-8-9H9v2h2V2zm4 0h-2v2h2V2zm4 0h-2v2h2V2zm-12 4H9v2h2V6zm4 0h-2v2h2V6zm4 0h-2v2h2V6z",
+      icon: "M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v13h2v-2h18v2h2v-9c0-2.21-1.79-4-4-4z",
       label: "Liste des hôtels",
       isActive: false,
       path: '/hotels'
@@ -79,7 +78,10 @@ const SidebarNavigation = ({ navigate }) => {
             icon={item.icon}
             label={item.label}
             isActive={item.isActive}
-            onClick={() => navigate(item.path)}
+            onClick={() => {
+              navigate(item.path);
+              closeSidebar();
+            }}
           />
         ))}
       </nav>
@@ -106,10 +108,10 @@ const SidebarUser = () => (
 );
 
 // Composant Sidebar complet
-const Sidebar = ({ isOpen, onLogoClick, navigate }) => (
+const Sidebar = ({ isOpen, onLogoClick, navigate, closeSidebar }) => (
   <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
     <SidebarHeader onLogoClick={onLogoClick} />
-    <SidebarNavigation navigate={navigate} />
+    <SidebarNavigation navigate={navigate} closeSidebar={closeSidebar} />
     <SidebarUser />
   </aside>
 );
@@ -241,16 +243,7 @@ const DashboardContent = () => (
 
 // Hook personnalisé pour gérer la sidebar responsive
 const useSidebarState = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setSidebarOpen(window.innerWidth >= 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
@@ -258,7 +251,7 @@ const useSidebarState = () => {
   return { sidebarOpen, toggleSidebar, closeSidebar };
 };
 
-// Composant principal Dashboard
+// Composant principal Dashboard  
 function Dashboard({ handleLogout }) {
   const navigate = useNavigate();
   const { sidebarOpen, toggleSidebar, closeSidebar } = useSidebarState();
@@ -280,7 +273,8 @@ function Dashboard({ handleLogout }) {
       <Sidebar 
         isOpen={sidebarOpen} 
         onLogoClick={handleLogoClick} 
-        navigate={navigate} 
+        navigate={navigate}
+        closeSidebar={closeSidebar}
       />
       <main className="main-content">
         <TopBar onLogout={handleLogoutClick} />
