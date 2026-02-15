@@ -79,7 +79,7 @@ body {
 /* ========== Sidebar ========== */
 .sidebar {
   width: 260px;
-  background-color: #2c2c2c;
+  background-color: #1e1e1e;
   color: white;
   display: flex;
   flex-direction: column;
@@ -96,10 +96,10 @@ body {
 }
 
 .sidebar-logo-icon {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   background-color: white;
-  color: #2c2c2c;
+  color: #1e1e1e;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,9 +108,10 @@ body {
 }
 
 .sidebar-logo-text {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .sidebar-section {
@@ -119,12 +120,13 @@ body {
 }
 
 .sidebar-section-title {
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
-  color: #888;
-  margin-bottom: 12px;
-  padding: 0 12px;
-  letter-spacing: 1px;
+  color: #666;
+  margin-bottom: 16px;
+  padding: 0 16px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
 }
 
 .sidebar-nav {
@@ -147,16 +149,18 @@ body {
   font-size: 14px;
   width: 100%;
   text-align: left;
+  font-weight: 500;
 }
 
 .sidebar-item:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.08);
   color: white;
 }
 
 .sidebar-item.active {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
   color: white;
+  font-weight: 600;
 }
 
 .sidebar-icon {
@@ -172,7 +176,7 @@ body {
   gap: 12px;
   padding: 16px 24px;
   margin-top: auto;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .user-avatar {
@@ -188,8 +192,9 @@ body {
 
 .user-name {
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 4px;
+  color: white;
 }
 
 .user-status {
@@ -275,6 +280,43 @@ body {
   cursor: pointer;
 }
 
+/* ========== Notification Icon avec Badge ========== */
+.notification-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.notification-icon:hover {
+  background-color: #f5f5f5;
+}
+
+.notification-icon svg {
+  color: #666;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #f39c12;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ========== Logout Icon ========== */
 .logout-icon {
   width: 36px;
@@ -312,12 +354,15 @@ body {
 .dashboard-content {
   flex: 1;
   overflow-y: auto;
-  padding: 40px 32px;
+  padding: 0; /* SUPPRESSION du padding */
   background-color: #f5f5f5;
 }
 
 .welcome-section {
+  background-color: white; /* FOND BLANC */
+  padding: 32px 40px; /* Padding interne */
   margin-bottom: 32px;
+  border-bottom: 1px solid #e5e5e5; /* Bordure subtile */
 }
 
 .welcome-section h2 {
@@ -333,12 +378,13 @@ body {
   font-weight: 400;
 }
 
-/* ========== Stats Grid ========== */
+/* ========== Stats Grid - Avec padding ========== */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   max-width: 1200px;
+  padding: 0 40px 40px 40px; /* Padding uniquement sur les côtés et en bas */
 }
 
 .stat-card {
@@ -421,7 +467,7 @@ body {
 .hotels-list-content {
   flex: 1;
   overflow-y: auto;
-  padding: 32px;
+  padding: 0; /* Suppression du padding général */
   background-color: #f5f5f5;
 }
 
@@ -429,7 +475,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
+  background-color: white; /* Fond blanc */
+  padding: 32px 40px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .hotels-title {
@@ -479,6 +528,7 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  padding: 0 40px 40px 40px; /* Padding sur les côtés et en bas */
 }
 
 .hotel-card {

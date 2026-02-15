@@ -1,20 +1,31 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './Dashboard.css';
 
-// Composant pour le bouton hamburger - CORRIGÉ : Reste toujours hamburger
-const HamburgerButton = ({ isOpen, onClick }) => (
-  <button
-    className="hamburger-btn"
-    onClick={onClick}
-  >
+// ==================== COMPOSANTS UTILITAIRES ====================
+
+// Hook personnalisé pour gérer la sidebar responsive
+const useSidebarState = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const closeSidebar = () => setSidebarOpen(false);
+
+  return { sidebarOpen, toggleSidebar, closeSidebar };
+};
+
+// ==================== COMPOSANTS UI ====================
+
+// Composant Hamburger
+const HamburgerButton = ({ onClick }) => (
+  <button className="hamburger-btn" onClick={onClick}>
     <span></span>
     <span></span>
     <span></span>
   </button>
 );
 
-// Composant pour l'overlay
+// Composant Overlay
 const SidebarOverlay = ({ isOpen, onClick }) => (
   <div
     className={`sidebar-overlay ${isOpen ? 'active' : ''}`}
@@ -22,7 +33,7 @@ const SidebarOverlay = ({ isOpen, onClick }) => (
   ></div>
 );
 
-// Composant pour le header de la sidebar
+// Composant Header Sidebar
 const SidebarHeader = ({ onLogoClick }) => (
   <div className="sidebar-header">
     <div
@@ -38,32 +49,19 @@ const SidebarHeader = ({ onLogoClick }) => (
   </div>
 );
 
-// Composant pour un item de navigation
-const NavItem = ({ icon, label, isActive, onClick }) => (
-  <button
-    className={`sidebar-item ${isActive ? 'active' : ''}`}
-    onClick={onClick}
-  >
-    <svg className="sidebar-icon" fill="currentColor" viewBox="0 0 24 24">
-      <path d={icon}/>
-    </svg>
-    {label}
-  </button>
-);
-
-// Composant pour la section de navigation
-const SidebarNavigation = ({ navigate, closeSidebar }) => {
+// Composant Navigation Sidebar
+const SidebarNavigation = ({ navigate, currentPage, closeSidebar }) => {
   const navItems = [
     {
       icon: "M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z",
-      label: "Dashboard",
-      isActive: true,
+      label: 'Dashboard',
+      isActive: currentPage === 'dashboard',
       path: '/dashboard'
     },
     {
       icon: "M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v13h2v-2h18v2h2v-9c0-2.21-1.79-4-4-4z",
-      label: "Liste des hôtels",
-      isActive: false,
+      label: 'Liste des hôtels',
+      isActive: currentPage === 'hotels',
       path: '/hotels'
     }
   ];
@@ -73,23 +71,26 @@ const SidebarNavigation = ({ navigate, closeSidebar }) => {
       <p className="sidebar-section-title">PRINCIPAL</p>
       <nav className="sidebar-nav">
         {navItems.map((item, index) => (
-          <NavItem
+          <button
             key={index}
-            icon={item.icon}
-            label={item.label}
-            isActive={item.isActive}
+            className={`sidebar-item ${item.isActive ? 'active' : ''}`}
             onClick={() => {
               navigate(item.path);
               closeSidebar();
             }}
-          />
+          >
+            <svg className="sidebar-icon" fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+              <path d={item.icon}/>
+            </svg>
+            {item.label}
+          </button>
         ))}
       </nav>
     </div>
   );
 };
 
-// Composant pour l'utilisateur dans la sidebar
+// Composant User Sidebar
 const SidebarUser = () => (
   <div className="sidebar-user">
     <img
@@ -107,32 +108,35 @@ const SidebarUser = () => (
   </div>
 );
 
-// Composant Sidebar complet
-const Sidebar = ({ isOpen, onLogoClick, navigate, closeSidebar }) => (
+// Composant Sidebar Complet
+const Sidebar = ({ isOpen, onLogoClick, navigate, currentPage, closeSidebar }) => (
   <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
     <SidebarHeader onLogoClick={onLogoClick} />
-    <SidebarNavigation navigate={navigate} closeSidebar={closeSidebar} />
+    <SidebarNavigation navigate={navigate} currentPage={currentPage} closeSidebar={closeSidebar} />
     <SidebarUser />
   </aside>
 );
 
-// Composant pour la barre de recherche
-const SearchBox = () => (
-  <div className="search-box">
-    <svg fill="currentColor" viewBox="0 0 24 24">
-      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-    </svg>
-    <input type="text" placeholder="Recherche" />
-  </div>
-);
-
-// Composant pour la barre supérieure
+// Composant Top Bar avec Notification
 const TopBar = ({ onLogout }) => (
   <div className="top-bar">
     <h1 className="page-title">Dashboard</h1>
 
     <div className="top-bar-actions">
-      <SearchBox />
+      <div className="search-box">
+        <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input type="text" placeholder="Recherche" />
+      </div>
+
+      {/* ICÔNE NOTIFICATION AVEC BADGE */}
+      <div className="notification-icon">
+        <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
+        </svg>
+        <span className="notification-badge">3</span>
+      </div>
 
       <img
         src="https://i.pravatar.cc/150?img=12"
@@ -141,13 +145,15 @@ const TopBar = ({ onLogout }) => (
       />
 
       <button className="logout-icon" onClick={onLogout}>
-        <svg fill="currentColor" viewBox="0 0 24 24">
+        <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
           <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
         </svg>
       </button>
     </div>
   </div>
 );
+
+// ==================== COMPOSANTS DASHBOARD ====================
 
 // Composant pour une carte de statistique
 const StatCard = ({ icon, color, number, label, subtitle }) => (
@@ -241,17 +247,8 @@ const DashboardContent = () => (
   </div>
 );
 
-// Hook personnalisé pour gérer la sidebar responsive
-const useSidebarState = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+// ==================== COMPOSANT PRINCIPAL ====================
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-  const closeSidebar = () => setSidebarOpen(false);
-
-  return { sidebarOpen, toggleSidebar, closeSidebar };
-};
-
-// Composant principal Dashboard  
 function Dashboard({ handleLogout }) {
   const navigate = useNavigate();
   const { sidebarOpen, toggleSidebar, closeSidebar } = useSidebarState();
@@ -268,12 +265,13 @@ function Dashboard({ handleLogout }) {
 
   return (
     <div className="app-layout">
-      <HamburgerButton isOpen={sidebarOpen} onClick={toggleSidebar} />
+      <HamburgerButton onClick={toggleSidebar} />
       <SidebarOverlay isOpen={sidebarOpen} onClick={closeSidebar} />
       <Sidebar 
         isOpen={sidebarOpen} 
         onLogoClick={handleLogoClick} 
         navigate={navigate}
+        currentPage="dashboard"
         closeSidebar={closeSidebar}
       />
       <main className="main-content">
